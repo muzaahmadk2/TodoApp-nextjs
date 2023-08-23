@@ -1,0 +1,62 @@
+.form {
+    padding: 1rem;
+  }
+
+  .control {
+    margin-bottom: 0.5rem;
+  }
+  
+  .control label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .control input,
+  .control textarea {
+    display: block;
+    font: inherit;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 0.25rem;
+    width: 100%;
+  }
+  
+  .control button{
+    
+    font: inherit;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 0.25rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .control button:hover,
+  .control button:focus {
+    border: 2px solid #058f4f;
+    transform: scale(1.05);
+    
+  }
+  .actions {
+    margin-top: 1rem;
+    text-align: right;
+  }
+  
+  .actions button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #c43a28;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #c43a28;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .actions button:hover,
+  .actions button:active {
+    background-color: #8f1505;
+    border-color: #8f1505;
+  }
