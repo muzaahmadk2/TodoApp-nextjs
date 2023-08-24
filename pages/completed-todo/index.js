@@ -1,9 +1,9 @@
 import CompletedTodoList from "@/components/todos/CompletedTodoList";
-import { useSelector } from "react-redux";
+import { MongoClient } from "mongodb";
 import { Fragment } from "react";
 
-function CompletedTodo() {
-  const todoList = useSelector((state) => state.todo.completedList);
+function CompletedTodo(props) {
+  const todoList = props.todos;
   const length = todoList.length;
 
   return (
@@ -17,4 +17,30 @@ function CompletedTodo() {
   );
 }
 
+export async function getStaticProps() {
+  //fetching data from api
+
+  const client = await MongoClient.connect(
+    "mongodb+srv://muzaahmadk:pDxdGtJBV62rPT83@cluster0.4w55fjn.mongodb.net/completedTodos?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const completedTodosCollection = db.collection("completedTodos");
+
+  const todos = await completedTodosCollection.find().toArray();
+  
+  
+  client.close();
+
+  return {
+    props: {
+      todos: todos.map((todo) => ({
+        title: todo.title,
+        date: todo.date,
+        id: todo._id.toString(),
+      })),
+    },
+    revalidate: 1,
+  };
+}
 export default CompletedTodo;

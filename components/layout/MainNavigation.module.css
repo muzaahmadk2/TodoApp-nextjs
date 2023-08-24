@@ -13,11 +13,18 @@
   color: white;
   font-weight: bold;
 }
-.input input{
-  border: 2px solid #3b373d;
-  border-radius: 5px;
-  background-color: #beaba8;
+.input{
+  display: flex;
+  align-items: center;
 }
+.input input{
+  /* border: 2px solid #3b373d;
+  border-radius: 5px;
+  background-color: #beaba8; */
+  
+  
+}
+
 
 .header ul {
   list-style: none;

@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { TodoAction } from "../store/Todo-Slice";
 
-function TodoForm() {
+function TodoForm(props) {
   const titleInputRef = useRef();
   const [selectedDate, setSelectedDate] = useState(null);
   const dispatch = useDispatch();
@@ -30,7 +30,6 @@ function TodoForm() {
     const enteredTitle = titleInputRef.current.value;
 
     const todoData = {
-      id: Math.random(),
       title: enteredTitle,
       date: selectedDate.toLocaleDateString("en-US", {
         weekday: "short",
@@ -40,7 +39,7 @@ function TodoForm() {
       }),
     };
 
-    dispatch(TodoAction.addList(todoData));
+    props.onAddTodo(todoData);
     titleInputRef.current.value = '';
     setSelectedDate(null);
   }
