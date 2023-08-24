@@ -31,6 +31,7 @@ function TodoForm(props) {
 
     const todoData = {
       title: enteredTitle,
+      status:'incomplete',
       date: selectedDate.toLocaleDateString("en-US", {
         weekday: "short",
         year: "numeric",

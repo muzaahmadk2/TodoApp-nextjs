@@ -60,3 +60,10 @@
     background-color: #8f1505;
     border-color: #8f1505;
   }
+
+  .close{
+    position: relative;
+    margin-left: 38rem;
+    border: none;
+    background: transparent;
+  }

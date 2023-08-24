@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const TodoSlice = createSlice({
   name: "todo",
-  initialState: { todoList: [], completedList: [] },
+  initialState: { todoList: [], completedList: [],newTodoMode: false },
   reducers: {
     addList: (state, action) => {
       state.todoList.push(action.payload);
@@ -20,6 +20,9 @@ const TodoSlice = createSlice({
       });
       state.completedList.push(action.payload);
     },
+    changeMode: (state) => {
+      state.newTodoMode = !state.newTodoMode;
+    }
   },
 });
 
