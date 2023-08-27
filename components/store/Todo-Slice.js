@@ -2,23 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const TodoSlice = createSlice({
   name: "todo",
-  initialState: { todoList: [], completedList: [],newTodoMode: false },
+  initialState: { todoList: [], editList: [],newTodoMode: false, editMode: false },
   reducers: {
     addList: (state, action) => {
       state.todoList.push(action.payload);
     },
-    removeList: (state, action) => {
-      const id = action.payload;
-      state.todoList = state.todoList.filter((item) => {
-        return item.id !== id;
-      });
+    editModeChange: (state) => {
+      state.editMode = false;
     },
-    completeList: (state, action) => {
-      const id = action.payload.id;
-      state.todoList = state.todoList.filter((item) => {
-        return item.id !== id;
-      });
-      state.completedList.push(action.payload);
+    editList: (state, action) => {
+      state.editMode = true;
+      state.editList = action.payload;
     },
     changeMode: (state) => {
       state.newTodoMode = !state.newTodoMode;

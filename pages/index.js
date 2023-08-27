@@ -7,17 +7,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import TodoForm from "@/components/todos/TodoForm";
 import { useSelector, useDispatch } from "react-redux";
 import { TodoAction } from "@/components/store/Todo-Slice";
+import Notification from "@/components/ui/Notification";
+import { uiAction } from "@/components/store/ui-slice";
 
 function HomePage(props) {
   const [todoList, setTodoList] = useState(props.todos);
   const isMode = useSelector((state) => state.todo.newTodoMode);
   const dispatch = useDispatch();
+  const notification = useSelector(state => state.ui.notification);
 
   function changeModeHandler() {
     dispatch(TodoAction.changeMode());
   }
 
   async function addTodoHandler(newTodoData) {
+    dispatch(
+      uiAction.showNotification({
+        status: "adding",
+        title: "Adding....!",
+        message: "Adding Todo Data..!",
+      })
+    );
     const response = await fetch("api/new-todo", {
       method: "POST",
       body: JSON.stringify(newTodoData),
@@ -34,12 +44,32 @@ function HomePage(props) {
     }
 
     console.log(data.message);
+
+    dispatch(
+      uiAction.showNotification({
+        status: "success",
+        title: "Success....!",
+        message: "Todo data addedd Successfully..!",
+      })
+    );
+
+    setTimeout(() => {
+      dispatch(uiAction.disbleNotification());
+    }, 2000);
+
     dispatch(TodoAction.changeMode());
     
   }
 
   return (
     <Fragment>
+      {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
       {todoList.length === 0 ? (
         <h1>No Todo List to Show..!</h1>
       ) : (

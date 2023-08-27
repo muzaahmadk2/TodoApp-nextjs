@@ -3,13 +3,18 @@ import classes from "./TodoForm.module.css";
 import { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { TodoAction } from "../store/Todo-Slice";
+import { parse } from 'date-fns';
 
 function TodoForm(props) {
+  const isEditMode = useSelector(state => state.todo.editMode);
+  const editList = useSelector(state => state.todo.editList);
   const titleInputRef = useRef();
-  const [selectedDate, setSelectedDate] = useState(null);
+  const dateFormat = 'EEE, MMM d, yyyy';
+  const [selectedDate, setSelectedDate] = useState(isEditMode === true ? parse(editList.date, dateFormat, new Date()) : null);
   const dispatch = useDispatch();
+  
   
 
   function handleDateHandler(date) {
@@ -43,6 +48,7 @@ function TodoForm(props) {
     props.onAddTodo(todoData);
     titleInputRef.current.value = '';
     setSelectedDate(null);
+    dispatch(TodoAction.editModeChange());
   }
 
   return (
@@ -50,7 +56,7 @@ function TodoForm(props) {
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="title">Todo Title</label>
-          <input type="text" required id="title" ref={titleInputRef} />
+          <input type="text" required id="title" ref={titleInputRef} defaultValue={isEditMode ===true ? editList.title : ''} />
         </div>
 
         <div className={classes.control}>
