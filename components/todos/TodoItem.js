@@ -25,21 +25,24 @@ function TodoItem(props) {
   }
 
   const handleCheck = async (item) => {
-    const todoIdToDelete = item.id;
-    await deleteTodoHandler(todoIdToDelete);
-
-    const completedTodoData = { title: item.title, date: item.date };
-    const response = await fetch("api/new-completed-todo", {
-      method: "POST",
-      body: JSON.stringify(completedTodoData),
+    const updateTodoData = {
+      id: item.id, // The unique identifier of the document you want to update
+      status: "completed", // The new title you want to set
+        // Add other fields you want to update here
+      
+    };
+    
+    const response = await fetch('/api/new-todo', {
+      method: "PUT",
+      body: JSON.stringify(updateTodoData),
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+    
     const data = await response.json();
-
     console.log(data);
+    
     setIsCompleted(true);
   };
 

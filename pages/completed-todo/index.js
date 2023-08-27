@@ -21,13 +21,13 @@ export async function getStaticProps() {
   //fetching data from api
 
   const client = await MongoClient.connect(
-    "mongodb+srv://muzaahmadk:pDxdGtJBV62rPT83@cluster0.4w55fjn.mongodb.net/completedTodos?retryWrites=true&w=majority"
+    "mongodb+srv://muzaahmadk:pDxdGtJBV62rPT83@cluster0.4w55fjn.mongodb.net/todos?retryWrites=true&w=majority"
   );
   const db = client.db();
 
-  const completedTodosCollection = db.collection("completedTodos");
+  const completedTodosCollection = db.collection("todos");
 
-  const todos = await completedTodosCollection.find().toArray();
+  const todos = await completedTodosCollection.find({status:'completed'}).toArray();
   
   
   client.close();

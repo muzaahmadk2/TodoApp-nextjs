@@ -13,7 +13,7 @@ function NewTodo() {
 
     const data = await response.json();
 
-    console.log(data);
+    console.log("newtodopage",data);
   }
 
   return <TodoForm onAddTodo={addTodoHandler}/>;

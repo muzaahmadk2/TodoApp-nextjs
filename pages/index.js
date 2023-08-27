@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TodoAction } from "@/components/store/Todo-Slice";
 
 function HomePage(props) {
+  const [todoList, setTodoList] = useState(props.todos);
   const isMode = useSelector((state) => state.todo.newTodoMode);
   const dispatch = useDispatch();
 
@@ -27,16 +28,19 @@ function HomePage(props) {
 
     const data = await response.json();
 
-    console.log(data);
-    dispatch(TodoAction.changeMode());
-  }
+    if (response.ok) {
+      // Update the state with the new todo data
+      setTodoList((prevTodoList) => [...prevTodoList, data.data]);
+    }
 
-  const todoList = props.todos;
-  const length = todoList.length;
+    console.log(data.message);
+    dispatch(TodoAction.changeMode());
+    
+  }
 
   return (
     <Fragment>
-      {length === 0 ? (
+      {todoList.length === 0 ? (
         <h1>No Todo List to Show..!</h1>
       ) : (
         <TodoList todos={todoList} />
@@ -76,7 +80,7 @@ export async function getStaticProps() {
 
   const todosCollection = db.collection("todos");
 
-  const todos = await todosCollection.find().toArray();
+  const todos = await todosCollection.find({status: 'incomplete'}).toArray();
 
   client.close();
 
